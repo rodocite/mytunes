@@ -7,7 +7,12 @@ var LibraryEntryView = Backbone.View.extend({
 
   events: {
     'click': function() {
-      this.model.play();
+    console.log("LibraryEntryView play");
+    console.log("this.model in LEV", this.model);
+    console.log("this in LEV " + this)
+
+
+      this.model.play();  //play method in songModel
     }
   },
 

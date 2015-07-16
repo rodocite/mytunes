@@ -2,6 +2,9 @@
 var AppModel = Backbone.Model.extend({
 
   initialize: function(params){
+    console.log("appmodel init");
+
+
     this.set('currentSong', new SongModel());
     this.set('songQueue', new SongQueue());
 
@@ -13,9 +16,28 @@ var AppModel = Backbone.Model.extend({
     getting called from the window (unless we override it, as we do here). */
 
 
-    params.library.on('play', function(song){
+
+    this.listenTo(params.library, 'play', function(song){
       this.set('currentSong', song);
-    }, this);
+    });
+
+    this.listenTo(params.library, 'enqueue', function(song){
+      // this.set('currentSong', song);
+    });
+
+    this.listenTo(params.library, 'dequeue', function(song){
+      // this.set('currentSong', song);
+    });
+
+    this.listenTo(params.library, 'ended', function(song){
+      console.log('ended in AppModel')
+
+      // this.set('currentSong', song);
+    });
   }
 
 });
+    // params.library.on('play', function(song){
+
+    //   this.set('currentSong', song);
+    // }, this);

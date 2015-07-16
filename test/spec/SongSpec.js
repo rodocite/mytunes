@@ -17,22 +17,22 @@ describe('SongModel', function() {
     });
   });
 
-  xdescribe('enqueue', function() {
+  describe('enqueue', function() {
     it('triggers an "enqueue" event', function() {
       model.enqueue();
       expect(model.trigger).to.have.been.calledWith('enqueue', model);
     });
   });
 
-  xdescribe('dequeue', function() {
+  describe('dequeue', function() {
     it('triggers a "dequeue" event', function() {
       model.dequeue();
       expect(model.trigger).to.have.been.calledWith('dequeue', model);
     });
   });
 
-  xdescribe('ended', function() {
-    it('triggers an "ended" event', function() {
+  describe('ended', function() {
+   it('triggers an "ended" event', function() {
       model.play();
       model.ended();
       expect(model.trigger).to.have.been.calledWith('ended', model);
