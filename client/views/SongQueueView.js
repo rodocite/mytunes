@@ -4,32 +4,20 @@ var SongQueueView = Backbone.View.extend({
   tagName: "table",
 
   initialize: function() {
-    console.log("SQV init");
-
+    this.collection.on('add', this.addOne, this);
     this.render();
   },
 
   render: function(newQueue){
     // to preserve event handlers on child nodes, we must call .detach() on them before overwriting with .html()
     // see http://api.jquery.com/detach/
-
-    this.$el.children().detach();
-
-    this.$el.html('<th>Queue</th>')
-
-    if(newQueue){
-      this.$el.html('<th>Queue</th>').append(
-        newQueue.map(function(song){
-          return new SongQueueEntryView({model: song}).render();
-        })
-      )
-    }
-
+    this.$el.html('<th>Song Queue</th>');
+    this.collection.each(this.addOne, this);
   },
 
-  displayQueue: function(newQueue){
-    this.model = newQueue;
-    this.render(newQueue);
+  addOne: function(song){
+    var node = new SongQueueEntryView({model: song});
+    this.$el.append(node.render());
   }
 
 

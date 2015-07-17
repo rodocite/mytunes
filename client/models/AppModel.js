@@ -15,27 +15,26 @@ var AppModel = Backbone.Model.extend({
     getting called from the window (unless we override it, as we do here). */
 
 
-
     this.listenTo(params.library, 'play', function(song){
-      console.log('play in appModel')
       this.set('currentSong', song);
     });
 
     this.listenTo(params.library, 'enqueue', function(song){
-      // this.set('currentSong', song);
-      console.log('enqueue in appModel')
       this.get('songQueue').addSong(song);
     });
 
-    this.listenTo(params.library, 'dequeue', function(song){
-      // this.set('currentSong', song);
-    });
-
     this.listenTo(params.library, 'ended', function(song){
-      console.log('ended in AppModel')
-
       // this.set('currentSong', song);
+      console.log('ended in appModel')
+      this.get('songQueue').removeSong(song);
     });
+
+    // this.listenTo(params.library, 'dequeue', function(song){
+    //   // this.set('currentSong', song);
+    // });
+
+    //listenTo stop
+      // this.set('currentSong', song);
   }
 
 });

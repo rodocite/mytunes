@@ -7,36 +7,52 @@ var SongQueue = Songs.extend({
 
     console.log("songQueue init")
 
+
+    this.listenTo(this, 'enqueue', this.addSong());
+    this.listenTo(this, 'dequeue', this.removeSong());
+    this.listenTo(this, 'ended', this.playNext());
+    //add listeners
+
   },
 
   playFirst: function() {
-    this.trigger('play', this);
+    console.log(this)
+    this.at(0).play();
   },
 
   addSong: function(modelSong) {
     this.add(modelSong);
-    console.log("addSong in SQ")
     this.displayQueue();
-    if(this.length < 2) {
+    if(this.length === 1) {
       this.playFirst();
     }
-
   },
 
-  removeSong: function(modelSong) {
-    // iterate through queue?
-      // find song at correct position?
-        // remove song
-    this.remove(modelSong);
+  removeSong: function(song) {
+    // maybe play next
     this.displayQueue();
+    if(this.at(0) === song) {
+      this.playNext();
+    }
+    this.remove(song);
   },
 
   displayQueue: function() {
+    // Check if song was added or removed
     var queue = [];
     queue = this.slice();
     console.log(queue);
+  },
+
+  playNext: function() {
+    console.log("ended & triggered playNext")
+    this.shift();
+    if( this.length >= 1 ){
+      this.playFirst();
+    }
+    //check if there is next song
+      //if next song
+         //remove previous song out of queue
+           //play next song
   }
-
-
-
 });
